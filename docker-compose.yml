@@ -1,0 +1,37 @@
+services:
+  web:
+    image: php:8.2-apache
+    container_name: php_final
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      - prog3
+    depends_on:
+      - db
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+    command: >
+      bash -c "apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo_mysql && apache2-foreground"
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: db_final
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: appuserpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - prog3
+
+networks:
+  prog3:
+    name: prog3
+    external: true
+
+volumes:
+  mysql_data:
