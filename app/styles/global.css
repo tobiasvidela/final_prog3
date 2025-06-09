@@ -20,11 +20,11 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: var(--light-gray1);
 }
 
 .container {
-    background-color: white;
+    background-color: var(--white);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -35,6 +35,12 @@ body {
 h1, h2 {
     text-align: center;
     color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .form-group {
@@ -49,14 +55,17 @@ label {
 
 input, select {
     width: 100%;
+    box-sizing: border-box;
+    max-width: inherit;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 button {
+    margin-top: 15px;
     padding: 8px 12px;
-    background-color: #007bff;
+    background-color: var(--light-blue1);
     color: white;
     border: none;
     border-radius: 4px;
