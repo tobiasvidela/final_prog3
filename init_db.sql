@@ -1,17 +1,17 @@
 -- Crear la base de datos
-
 CREATE DATABASE IF NOT EXISTS db_final;
 USE db_final;
 
 -- Tabla de usuarios
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     rol ENUM('admin', 'cliente') NOT NULL
 );
+
 -- Tabla de clientes (especialización de usuarios)
-CREATE TABLE clientes (
+CREATE TABLE IF NOT EXISTS clientes (
     id_usuario INT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE clientes (
 );
 
 -- Tabla de productos
-CREATE TABLE productos (
+CREATE TABLE IF NOT EXISTS productos (
     id_producto INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE productos (
 );
 
 -- Tabla de pedidos
-CREATE TABLE pedidos (
+CREATE TABLE IF NOT EXISTS pedidos (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     estado ENUM('pendiente', 'armado', 'enviado', 'cancelado') NOT NULL DEFAULT 'pendiente',
@@ -40,7 +40,7 @@ CREATE TABLE pedidos (
 );
 
 -- Tabla de detalles de pedidos
-CREATE TABLE detalles_pedidos (
+CREATE TABLE IF NOT EXISTS detalles_pedidos (
     id_detalle INT AUTO_INCREMENT PRIMARY KEY,
     id_pedido INT NOT NULL,
     id_producto INT NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE detalles_pedidos (
 
 -- Stored Procedure: Autenticar usuario
 DELIMITER //
-CREATE PROCEDURE sp_autenticar_usuario (
+CREATE PROCEDURE IF NOT EXISTS sp_autenticar_usuario (
     IN p_username VARCHAR(50),
     IN p_password VARCHAR(255)
 )
@@ -66,13 +66,13 @@ DELIMITER ;
 
 -- Stored Procedure: Crear pedido
 DELIMITER //
-CREATE PROCEDURE sp_crear_pedido (
+CREATE PROCEDURE IF NOT EXISTS sp_crear_pedido (
     IN p_id_usuario INT,
     IN p_descripcion VARCHAR(255),
     IN p_productos JSON
 )
 BEGIN
-    DECLARE v_precio_total DECIMAL(10, 2) DEFAULT 0.0;
+    DECLARE v_precio_total DECIMAL(10, 2);
     DECLARE v_id_pedido INT;
     DECLARE v_id_producto INT;
     DECLARE v_cantidad INT;
@@ -103,7 +103,7 @@ BEGIN
         IF v_cantidad <= 0 OR v_cantidad > v_stock THEN
             ROLLBACK;
             SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = CONCAT('Stock insuficiente para el producto con ID ', v_id_producto);
+            SET MESSAGE_TEXT = 'Stock insuficiente para el producto.';
         END IF;
         
         INSERT INTO detalles_pedidos (id_pedido, id_producto, cantidad, precio_unitario, precio_total_producto)
@@ -128,7 +128,7 @@ DELIMITER ;
 
 -- Stored Procedure: Actualizar estado de pedido
 DELIMITER //
-CREATE PROCEDURE sp_actualizar_estado_pedido (
+CREATE PROCEDURE IF NOT EXISTS sp_actualizar_estado_pedido (
     IN p_id_pedido INT,
     IN p_estado ENUM('pendiente', 'armado', 'enviado', 'cancelado')
 )
@@ -141,7 +141,7 @@ DELIMITER ;
 
 -- Stored Procedure: Obtener pedidos por cliente
 DELIMITER //
-CREATE PROCEDURE sp_obtener_pedidos_cliente (
+CREATE PROCEDURE IF NOT EXISTS sp_obtener_pedidos_cliente (
     IN p_id_usuario INT
 )
 BEGIN
@@ -154,7 +154,7 @@ DELIMITER ;
 
 -- Stored Procedure: Obtener detalles de un pedido
 DELIMITER //
-CREATE PROCEDURE sp_obtener_detalles_pedido (
+CREATE PROCEDURE IF NOT EXISTS sp_obtener_detalles_pedido (
     IN p_id_pedido INT
 )
 BEGIN
@@ -167,7 +167,7 @@ DELIMITER ;
 
 -- Stored Procedure: Crear cliente
 DELIMITER //
-CREATE PROCEDURE sp_crear_cliente (
+CREATE PROCEDURE IF NOT EXISTS sp_crear_cliente (
     IN p_username VARCHAR(50),
     IN p_password VARCHAR(255),
     IN p_nombre VARCHAR(50),
@@ -188,7 +188,7 @@ DELIMITER ;
 
 -- Stored Procedure: Actualizar cliente
 DELIMITER //
-CREATE PROCEDURE sp_actualizar_cliente (
+CREATE PROCEDURE IF NOT EXISTS sp_actualizar_cliente (
     IN p_id_usuario INT,
     IN p_username VARCHAR(50),
     IN p_password VARCHAR(255),
@@ -210,7 +210,7 @@ DELIMITER ;
 
 -- Stored Procedure: Eliminar cliente
 DELIMITER //
-CREATE PROCEDURE sp_eliminar_cliente (
+CREATE PROCEDURE IF NOT EXISTS sp_eliminar_cliente (
     IN p_id_usuario INT
 )
 BEGIN
@@ -220,7 +220,7 @@ DELIMITER ;
 
 -- Stored Procedure: Obtener clientes
 DELIMITER //
-CREATE PROCEDURE sp_obtener_clientes ()
+CREATE PROCEDURE IF NOT EXISTS sp_obtener_clientes ()
 BEGIN
     SELECT u.id_usuario, u.username, u.password, c.nombre, c.apellido, c.email
     FROM usuarios u
@@ -231,7 +231,7 @@ DELIMITER ;
 
 -- Stored Procedure: Crear producto
 DELIMITER //
-CREATE PROCEDURE sp_crear_producto (
+CREATE PROCEDURE IF NOT EXISTS sp_crear_producto (
     IN p_nombre VARCHAR(100),
     IN p_precio DECIMAL(10, 2),
     IN p_cantidad_stock INT,
@@ -245,7 +245,7 @@ DELIMITER ;
 
 -- Stored Procedure: Actualizar producto
 DELIMITER //
-CREATE PROCEDURE sp_actualizar_producto (
+CREATE PROCEDURE IF NOT EXISTS sp_actualizar_producto (
     IN p_id_producto INT,
     IN p_nombre VARCHAR(100),
     IN p_precio DECIMAL(10, 2),
@@ -261,7 +261,7 @@ DELIMITER ;
 
 -- Stored Procedure: Eliminar producto
 DELIMITER //
-CREATE PROCEDURE sp_eliminar_producto (
+CREATE PROCEDURE IF NOT EXISTS sp_eliminar_producto (
     IN p_id_producto INT
 )
 BEGIN
@@ -271,7 +271,7 @@ DELIMITER ;
 
 -- Stored Procedure: Obtener productos
 DELIMITER //
-CREATE PROCEDURE sp_obtener_productos ()
+CREATE PROCEDURE IF NOT EXISTS sp_obtener_productos ()
 BEGIN
     SELECT id_producto, nombre, precio, cantidad_stock, proveedor
     FROM productos;
