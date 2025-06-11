@@ -12,13 +12,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if ($user) {
-            $_SESSION['user'] = $user;
-            if ($user['rol'] === 'cliente') {
-                header('Location: client.php');
-            } elseif ($user['rol'] === 'admin') {
-                header('Location: admin.php');
+            // Obtener id_usuario con una consulta adicional
+            $stmt = $pdo->prepare('SELECT id_usuario FROM usuarios WHERE username = ?');
+            $stmt->execute([$username]);
+            $id_usuario = $stmt->fetchColumn();
+
+            if ($id_usuario !== false) {
+                // Almacenar datos del usuario en la sesión
+                $_SESSION['user'] = [
+                    'id_usuario' => $id_usuario,
+                    'username' => $user['username'],
+                    'rol' => $user['rol']
+                ];
+
+                // Redirigir según el rol
+                if ($user['rol'] === 'cliente') {
+                    header('Location: client.php');
+                } elseif ($user['rol'] === 'admin') {
+                    header('Location: admin.php');
+                }
+                exit;
+            } else {
+                $error = 'No se encontró el ID de usuario.';
             }
-            exit;
         } else {
             $error = 'Acceso inválido. Por favor, inténtelo otra vez.';
         }

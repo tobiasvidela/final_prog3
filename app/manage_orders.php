@@ -8,6 +8,30 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'admin') {
     exit;
 }
 
+// Procesar acciones
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $action = $_POST['action'] ?? '';
+        $id_pedido = $_POST['id_pedido'] ?? 0;
+
+        if ($action === 'update_status' && !empty($_POST['estado'])) {
+            $stmt = $pdo->prepare('CALL sp_actualizar_estado_pedido(?, ?)');
+            $stmt->execute([$id_pedido, $_POST['estado']]);
+            $success = 'Estado del pedido actualizado con éxito.';
+        } elseif ($action === 'delete') {
+            $pdo->beginTransaction();
+            // Con ON DELETE CASCADE, no es necesario eliminar detalles manualmente
+            $stmt = $pdo->prepare('DELETE FROM pedidos WHERE id_pedido = ?');
+            $stmt->execute([$id_pedido]);
+            $pdo->commit();
+            $success = 'Pedido eliminado con éxito.';
+        }
+    } catch (PDOException $e) {
+        $pdo->rollBack();
+        $error = 'Error al procesar la acción: ' . $e->getMessage();
+    }
+}
+
 // Obtener todos los pedidos
 try {
     $stmt = $pdo->query("SELECT p.id_pedido, p.descripcion, p.estado, p.precio_total, p.fecha, c.nombre, c.apellido
@@ -17,25 +41,6 @@ try {
     $orders = $stmt->fetchAll();
 } catch (PDOException $e) {
     $error = 'Error al obtener pedidos: ' . $e->getMessage();
-}
-
-// Procesar acciones
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        if (isset($_POST['action'])) {
-            if ($_POST['action'] === 'update_status') {
-                $stmt = $pdo->prepare('CALL sp_actualizar_estado_pedido(?, ?)');
-                $stmt->execute([$_POST['id_pedido'], $_POST['estado']]);
-            } elseif ($_POST['action'] === 'delete') {
-                $stmt = $pdo->prepare('DELETE FROM pedidos WHERE id_pedido = ?');
-                $stmt->execute([$_POST['id_pedido']]);
-            }
-            header('Location: manage_orders.php');
-            exit;
-        }
-    } catch (PDOException $e) {
-        $error = 'Error al procesar la acción: ' . $e->getMessage();
-    }
 }
 ?>
 
@@ -52,17 +57,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="admin-page">
     <div class="container">
         <h1>Gestionar Pedidos</h1>
-        <a href="admin.php">Volver al Panel</a>
+        <a href="admin.php">Volver al Panel de Admin</a>
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
-        <h2>Lista de Pedidos</h2>
+        <?php if (isset($success)): ?>
+            <p class="success"><?php echo htmlspecialchars($success); ?></p>
+        <?php endif; ?>
         <table>
             <tr>
                 <th>ID Pedido</th>
-                <th>Cliente</th>
-                <th>Descripción</th>
+                <th>Usuario</th>
                 <th>Estado</th>
+                <th>Descripción</th>
                 <th>Precio Total</th>
                 <th>Fecha</th>
                 <th>Acciones</th>
@@ -70,44 +77,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php foreach ($orders as $order): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($order['id_pedido']); ?></td>
-                    <td><?php echo htmlspecialchars($order['nombre'] . ' ' . $order['apellido']); ?></td>
+                    <td><?php echo htmlspecialchars($order['nombre']); ?></td>
+                    <td><?php echo htmlspecialchars($order['estado']); ?></td>
                     <td><?php echo htmlspecialchars($order['descripcion']); ?></td>
+                    <td><?php echo htmlspecialchars(number_format($order['precio_total'], 2)); ?></td>
+                    <td><?php echo htmlspecialchars($order['fecha']); ?></td>
                     <td>
                         <form method="POST" style="display:inline;">
-                            <input type="hidden" name="action" value="update_status">
                             <input type="hidden" name="id_pedido" value="<?php echo $order['id_pedido']; ?>">
-                            <select name="estado" onchange="this.form.submit()">
+                            <input type="hidden" name="action" value="update_status">
+                            <select name="estado">
                                 <option value="pendiente" <?php echo $order['estado'] === 'pendiente' ? 'selected' : ''; ?>>Pendiente</option>
                                 <option value="armado" <?php echo $order['estado'] === 'armado' ? 'selected' : ''; ?>>Armado</option>
                                 <option value="enviado" <?php echo $order['estado'] === 'enviado' ? 'selected' : ''; ?>>Enviado</option>
                                 <option value="cancelado" <?php echo $order['estado'] === 'cancelado' ? 'selected' : ''; ?>>Cancelado</option>
                             </select>
+                            <button type="submit">Actualizar</button>
                         </form>
-                    </td>
-                    <td><?php echo htmlspecialchars(number_format($order['precio_total'], 2)); ?></td>
-                    <td><?php echo htmlspecialchars($order['fecha']); ?></td>
-                    <td>
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="action" value="delete">
+                        <form method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este pedido?');">
                             <input type="hidden" name="id_pedido" value="<?php echo $order['id_pedido']; ?>">
-                            <button type="submit" class="delete-btn" onclick="return confirm('¿Confirmar eliminación?');">Eliminar</button>
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="delete-btn">Eliminar</button>
                         </form>
-                        <button onclick="showOrderDetails(<?php echo $order['id_pedido']; ?>)">Ver Detalles</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
-        <div id="orderDetails" style="display:none;">
-            <h2>Detalles del Pedido</h2>
-            <table id="detailsTable">
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Subtotal</th>
-                </tr>
-            </table>
-        </div>
     </div>
 </body>
 </html>

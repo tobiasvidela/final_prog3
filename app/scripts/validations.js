@@ -7,3 +7,16 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         alert('Por favor, completa todos los campos.');
     }
 });
+
+document.getElementById('orderForm')?.addEventListener('submit', function(event) {
+    const quantities = document.querySelectorAll('input[name^="quantity_"]');
+    let hasSelection = false;
+    quantities.forEach(input => {
+        if (parseInt(input.value) > 0) hasSelection = true;
+    });
+    const descripcion = document.getElementById('descripcion')?.value.trim();
+    if (!hasSelection || !descripcion) {
+        event.preventDefault();
+        alert('Selecciona al menos un producto y proporciona una descripción.');
+    }
+});
