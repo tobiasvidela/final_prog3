@@ -42,6 +42,15 @@ try {
 } catch (PDOException $e) {
     $error = 'Error al obtener pedidos: ' . $e->getMessage();
 }
+
+// Mapa de estados a íconos y tooltips
+$status_map = [
+    'pendiente' => ['icon' => '⏳', 'tooltip' => 'Pedido pendiente'],
+    'armado' => ['icon' => '📦', 'tooltip' => 'Pedido armado'],
+    'enviado' => ['icon' => '🚚', 'tooltip' => 'Pedido enviado'],
+    'cancelado' => ['icon' => '❌', 'tooltip' => 'Pedido cancelado']
+];
+
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +87,11 @@ try {
                 <tr>
                     <td><?php echo htmlspecialchars($order['id_pedido']); ?></td>
                     <td><?php echo htmlspecialchars($order['nombre']); ?></td>
-                    <td><?php echo htmlspecialchars($order['estado']); ?></td>
+                    <td>
+                        <span class="status-icon" title="<?php echo $status_map[$order['estado']]['tooltip']; ?>">
+                            <?php echo $status_map[$order['estado']]['icon']; ?>
+                        </span>
+                    </td>
                     <td><?php echo htmlspecialchars($order['descripcion']); ?></td>
                     <td><?php echo htmlspecialchars(number_format($order['precio_total'], 2)); ?></td>
                     <td><?php echo htmlspecialchars($order['fecha']); ?></td>

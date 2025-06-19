@@ -219,8 +219,11 @@ DELIMITER ;
 -- Insertar datos de prueba
 INSERT INTO usuarios (username, password, rol) VALUES ('admin', 'admin123', 'admin');
 INSERT INTO usuarios (username, password, rol) VALUES ('cliente1', 'cliente123', 'cliente');
+INSERT INTO usuarios (username, password, rol) VALUES ('cliente2', 'cliente234', 'cliente');
 INSERT INTO clientes (id_usuario, nombre, apellido, email) 
-VALUES ((SELECT id_usuario FROM usuarios WHERE username = 'cliente1'), 'Juan', 'Pérez', 'juan.perez@email.com');
-INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Laptop', 1000.00, 10, 'TechCorp');
-INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Teléfono', 500.00, 20, 'MobileInc');
-INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Auriculares', 50.00, 50, 'SoundCo');
+VALUES ((SELECT id_usuario FROM usuarios WHERE username = 'cliente1'), 'Juan', 'Perez', 'jperez@email.com'),
+VALUES ((SELECT id_usuario FROM usuarios WHERE username = 'cliente2'), 'Rogelia', 'Gutierrez', 'rguti@email.com');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Laptop', 1000.00, 50, 'TechCorp');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Teléfono', 500.00, 150, 'MobileInc');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Notebook', 120.00, 50, 'TechCorp');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Tablets', 450.00, 150, 'Sonyu');
