@@ -42,6 +42,9 @@ try {
             </ul>
         </nav>
         <h2>Pedidos Pendientes</h2>
+        <p>[mostrar los 5 más recientes]</p>
+        <p>[cambiar formularios a modales]</p>
+        <p>[agregar filtros de búsqueda]</p>
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>

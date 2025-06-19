@@ -2,6 +2,18 @@
 session_start();
 require_once 'conexion.php';
 
+// Verificar si sesión ya está iniciada
+if ($_SESSION != null) {
+    // Redirigir según el rol
+    if ($_SESSION['user']['rol'] === 'cliente') {
+        header('Location: client.php');
+    } elseif ($_SESSION['user']['rol'] === 'admin') {
+        header('Location: admin.php');
+    } else {
+        header('Location: index.php');
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
