@@ -264,17 +264,17 @@ a:hover {
     position: relative;
 }
 
-.status-icon[title]:hover:after {
-    content: attr(title);
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-size: 0.8em;
-    white-space: nowrap;
-    z-index: 10;
-}
+/* .status-icon[title]:hover:after { */
+    /* content: attr(title); */
+    /* position: absolute; */
+    /* top: -25px; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    /* background-color: #333; */
+    /* color: white; */
+    /* padding: 5px 10px; */
+    /* border-radius: 3px; */
+    /* font-size: 0.8em; */
+    /* white-space: nowrap; */
+    /* z-index: 10; */
+/* } */
