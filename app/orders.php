@@ -12,7 +12,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'cliente') {
 try {
     $stmt = $pdo->prepare('CALL sp_obtener_pedidos_cliente(?)');
     $stmt->execute([$_SESSION['user']['id_usuario']]);
-    $orders = $stmt->fetchAll();
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
 } catch (PDOException $e) {
     $error = 'Error al obtener pedidos: ' . $e->getMessage();
@@ -21,12 +21,21 @@ try {
 // Obtener detalles del pedido seleccionado (por defecto, el más reciente)
 $selected_order_id = $_GET['order_id'] ?? (!empty($orders) ? $orders[0]['id_pedido'] : null);
 $order_details = [];
+$order_status = null;
 if ($selected_order_id) {
     try {
         $stmt = $pdo->prepare('CALL sp_obtener_detalles_pedido(?)');
         $stmt->execute([$selected_order_id]);
         $order_details = $stmt->fetchAll();
         $stmt->closeCursor();
+
+        // Obtener estado del pedido
+        $stmt = $pdo->prepare('SELECT estado FROM pedidos WHERE id_pedido = ? AND id_usuario = ?');
+        $stmt->execute([$selected_order_id, $_SESSION['user']['id_usuario']]);
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($order) {
+            $order_status = $order['estado'];
+        }
     } catch (PDOException $e) {
         $error = 'Error al obtener detalles: ' . $e->getMessage();
     }
@@ -48,6 +57,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_details') {
         exit;
     }
 }
+
+// Mapa de estados a íconos y tooltips
+$status_map = [
+    'pendiente' => ['icon' => '⏳', 'tooltip' => 'Pedido pendiente'],
+    'armado' => ['icon' => '📦', 'tooltip' => 'Pedido armado'],
+    'enviado' => ['icon' => '🚚', 'tooltip' => 'Pedido enviado'],
+    'cancelado' => ['icon' => '❌', 'tooltip' => 'Pedido cancelado']
+];
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +99,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_details') {
             </div>
             <div class="main-content">
                 <?php if ($selected_order_id && !empty($order_details)): ?>
-                    <h2>Detalles del Pedido #<?php echo htmlspecialchars($selected_order_id); ?></h2>
+                    <h2>
+                        Detalles del Pedido #<?php echo htmlspecialchars($selected_order_id); ?>
+                        <?php if ($order_status && isset($status_map[$order_status])): ?>
+                            <span class="status-icon" title="<?php echo $status_map[$order_status]['tooltip']; ?>">
+                                <?php echo $status_map[$order_status]['icon']; ?>
+                            </span>
+                        <?php endif; ?>
+                    </h2>
                     <table id="detailsTable">
                         <tr>
                             <th>Producto</th>

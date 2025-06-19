@@ -8,6 +8,17 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['rol'] !== 'cliente') {
     exit;
 }
 
+// Obtener nombre del cliente
+try {
+    $stmt = $pdo->prepare('SELECT nombre FROM clientes WHERE id_usuario = ?');
+    $stmt->execute([$_SESSION['user']['id_usuario']]);
+    $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+    $nombre_cliente = $cliente ? htmlspecialchars($cliente['nombre']) : 'Cliente';
+} catch (PDOException $e) {
+    $error = 'Error al obtener nombre del cliente: ' . $e->getMessage();
+    $nombre_cliente = 'Cliente';
+}
+
 // Función para crear un pedido
 function createOrder($pdo, $id_usuario, $descripcion, $cart, $products) {
     try {
@@ -132,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_order'])) {
 </head>
 <body class="client-page">
     <div class="container">
-        <h1>Bienvenido, Cliente <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</h1>
+        <h1>Hola, <?php echo htmlspecialchars($nombre_cliente); ?>!</h1>
         <nav>
             <ul>
                 <li><a href="orders.php">Ver Mis Pedidos</a></li>

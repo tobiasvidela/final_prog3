@@ -32,7 +32,7 @@ try {
 </head>
 <body class="admin-page">
     <div class="container">
-        <h1>Bienvenido, Administrador <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</h1>
+        <h1>Bienvenido, Administrador!</h1>
         <nav>
             <ul>
                 <li><a href="manage_clients.php">Gestionar Clientes</a></li>
