@@ -223,7 +223,7 @@ INSERT INTO usuarios (username, password, rol) VALUES ('cliente2', 'cliente234',
 INSERT INTO clientes (id_usuario, nombre, apellido, email) 
 VALUES ((SELECT id_usuario FROM usuarios WHERE username = 'cliente1'), 'Juan', 'Perez', 'jperez@email.com'),
 VALUES ((SELECT id_usuario FROM usuarios WHERE username = 'cliente2'), 'Rogelia', 'Gutierrez', 'rguti@email.com');
-INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Laptop', 1000.00, 50, 'TechCorp');
-INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Teléfono', 500.00, 150, 'MobileInc');
-INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Notebook', 120.00, 50, 'TechCorp');
-INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Tablets', 450.00, 150, 'Sonyu');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Laptop', 1000.00, 500, 'TechCorp');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Teléfono', 500.00, 1050, 'MobileInc');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Notebook', 120.00, 500, 'TechCorp');
+INSERT INTO productos (nombre, precio, cantidad_stock, proveedor) VALUES ('Tablets', 450.00, 1500, 'Sony');

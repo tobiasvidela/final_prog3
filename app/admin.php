@@ -45,6 +45,7 @@ try {
         <p>[mostrar los 5 más recientes]</p>
         <p>[cambiar formularios a modales]</p>
         <p>[agregar filtros de búsqueda]</p>
+        <p>[mejorar css]</p>
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
