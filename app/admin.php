@@ -42,7 +42,6 @@ try {
             </ul>
         </nav>
         <h2>Pedidos Pendientes</h2>
-        <p>[mostrar los 5 más recientes]</p>
         <p>[cambiar formularios a modales]</p>
         <p>[agregar filtros de búsqueda]</p>
         <p>[mejorar css]</p>
