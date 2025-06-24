@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_order'])) {
     <link rel="stylesheet" href="styles/client.css">
     <script src="scripts/validations.js" defer></script>
 </head>
-<body class="client-page">
+<body>
     <div class="container">
         <h1>Hola, <?php echo htmlspecialchars($nombre_cliente); ?>!</h1>
         <nav>

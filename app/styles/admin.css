@@ -1,8 +1,116 @@
-.admin-page {
-    background-color: var(--admin-bg); 
+/* Estilo general de página admin */
+body {
+    background-color: var(--purple-bg);
 }
 
-/* Modal base */
+.container {
+    background-color: var(--surface-dark);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    margin: 2rem 1rem;
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+}
+
+/* Títulos */
+h1, h2 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: var(--surface-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--surface-dark);
+}
+
+th {
+    background-color: var(--surface-dark);
+    font-weight: 600;
+}
+
+/* Última fila sin borde */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Acciones */
+button, .delete-btn {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 2px;
+}
+
+button {
+    background-color: var(--primary);
+    color: var(--text-light);
+    border: none;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Navbar moderna */
+nav {
+    margin-bottom: 2rem;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    background-color: var(--surface-light);
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    flex-wrap: wrap;
+}
+
+.navbar li {
+    list-style: none;
+}
+
+.navbar a {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.navbar a:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Modal base (de acá en adelante, no tocar)*/
 .modal {
     position: fixed;
     top: 0;

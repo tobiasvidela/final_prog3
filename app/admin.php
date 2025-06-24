@@ -30,21 +30,18 @@ try {
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/admin.css">
 </head>
-<body class="admin-page">
+<body>
     <div class="container">
         <h1>Bienvenido, Administrador!</h1>
         <nav>
-            <ul>
-                <li><a href="manage_clients.php">Gestionar Clientes</a></li>
-                <li><a href="manage_orders.php">Gestionar Pedidos</a></li>
-                <li><a href="manage_products.php">Gestionar Productos</a></li>
+            <ul class="navbar">
+                <li><a href="manage_clients.php">Clientes</a></li>
+                <li><a href="manage_orders.php">Pedidos</a></li>
+                <li><a href="manage_products.php">Productos</a></li>
                 <li><a href="logout.php">Cerrar Sesión</a></li>
             </ul>
         </nav>
         <h2>Pedidos Pendientes</h2>
-        <p>[cambiar formularios a modales]</p>
-        <p>[agregar filtros de búsqueda]</p>
-        <p>[mejorar css]</p>
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
@@ -65,7 +62,13 @@ try {
                         <td><?php echo htmlspecialchars($order['nombre'] . ' ' . $order['apellido']); ?></td>
                         <td><?php echo htmlspecialchars($order['descripcion']); ?></td>
                         <td><?php echo htmlspecialchars(number_format($order['precio_total'], 2)); ?></td>
-                        <td><?php echo htmlspecialchars($order['fecha']); ?></td>
+                        <td>
+                            <?php
+                                $fechaOriginal = $order['fecha'];
+                                $fechaFormateada = (new DateTime($fechaOriginal))->format('d/m/Y H:i:s');
+                                echo htmlspecialchars($fechaFormateada);
+                            ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
