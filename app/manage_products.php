@@ -68,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
+        <!-- Botón para abrir el modal de creación -->
+        <button onclick="openProductModalForCreate()">Agregar Producto</button>
         <h2>Lista de Productos</h2>
         <table>
             <tr>
@@ -91,33 +93,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="hidden" name="id_producto" value="<?php echo $product['id_producto']; ?>">
                             <button type="submit" class="delete-btn" onclick="return confirm('¿Confirmar eliminación?');">Eliminar</button>
                         </form>
-                        <button onclick="fillProductUpdateForm(<?php echo htmlspecialchars(json_encode($product)); ?>)">Editar</button>
+                        <button onclick='fillProductUpdateForm(<?php echo json_encode($product); ?>)'>Editar</button>
+                        <!-- <button onclick="fillProductUpdateForm(<?php echo htmlspecialchars(json_encode($product)); ?>)">Editar</button> -->
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
-        <h2>Agregar/Editar Producto</h2>
-        <form method="POST" id="productForm">
-            <input type="hidden" name="action" id="productAction" value="create">
-            <input type="hidden" name="id_producto" id="productIdProducto">
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
+        <!-- Modal -->
+        <div id="productModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeProductModal()">&times;</span>
+                <h2 id="productModalTitle">Agregar/Editar Producto</h2>
+                <form method="POST" id="productForm">
+                    <input type="hidden" name="action" id="productAction" value="create">
+                    <input type="hidden" name="id_producto" id="productIdProducto">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio:</label>
+                        <input type="number" id="precio" name="precio" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad_stock">Stock:</label>
+                        <input type="number" id="cantidad_stock" name="cantidad_stock" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="proveedor">Proveedor:</label>
+                        <input type="text" id="proveedor" name="proveedor" required>
+                    </div>
+                    <button type="submit">Guardar</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="precio">Precio:</label>
-                <input type="number" id="precio" name="precio" step="0.01" required>
-            </div>
-            <div class="form-group">
-                <label for="cantidad_stock">Stock:</label>
-                <input type="number" id="cantidad_stock" name="cantidad_stock" required>
-            </div>
-            <div class="form-group">
-                <label for="proveedor">Proveedor:</label>
-                <input type="text" id="proveedor" name="proveedor" required>
-            </div>
-            <button type="submit">Guardar</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>

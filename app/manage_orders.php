@@ -62,6 +62,7 @@ $status_map = [
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/admin.css">
     <script src="scripts/management.js" defer></script>
+    <script src="scripts/admin.js" defer></script>
 </head>
 <body class="admin-page">
     <div class="container">
@@ -96,17 +97,11 @@ $status_map = [
                     <td><?php echo htmlspecialchars(number_format($order['precio_total'], 2)); ?></td>
                     <td><?php echo htmlspecialchars($order['fecha']); ?></td>
                     <td>
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="id_pedido" value="<?php echo $order['id_pedido']; ?>">
-                            <input type="hidden" name="action" value="update_status">
-                            <select name="estado">
-                                <option value="pendiente" <?php echo $order['estado'] === 'pendiente' ? 'selected' : ''; ?>>Pendiente</option>
-                                <option value="armado" <?php echo $order['estado'] === 'armado' ? 'selected' : ''; ?>>Armado</option>
-                                <option value="enviado" <?php echo $order['estado'] === 'enviado' ? 'selected' : ''; ?>>Enviado</option>
-                                <option value="cancelado" <?php echo $order['estado'] === 'cancelado' ? 'selected' : ''; ?>>Cancelado</option>
-                            </select>
-                            <button type="submit">Actualizar</button>
-                        </form>
+                        <button onclick='openOrderModal(<?php echo json_encode([
+                            "id_pedido" => $order["id_pedido"],
+                            "estado" => $order["estado"]
+                        ]); ?>)'>Actualizar</button>
+
                         <form method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este pedido?');">
                             <input type="hidden" name="id_pedido" value="<?php echo $order['id_pedido']; ?>">
                             <input type="hidden" name="action" value="delete">
@@ -116,6 +111,26 @@ $status_map = [
                 </tr>
             <?php endforeach; ?>
         </table>
+    </div>
+    <!-- Modal para actualizar estado -->
+    <div id="orderModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeOrderModal()">&times;</span>
+            <h2>Actualizar Estado del Pedido</h2>
+            <form method="POST">
+                <input type="hidden" name="action" value="update_status">
+                <input type="hidden" name="id_pedido" id="modalIdPedido">
+                <label for="modalEstado">Estado:</label>
+                <select name="estado" id="modalEstado" required>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="armado">Armado</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+                <br><br>
+                <button type="submit">Actualizar</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

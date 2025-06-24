@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/admin.css">
     <script src="scripts/management.js" defer></script>
+    <script src="scripts/admin.js" defer></script>
 </head>
 <body class="admin-page">
     <div class="container">
@@ -70,6 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
+        <!-- Botón para abrir el modal en modo "crear" -->
+        <button onclick="openModalForCreate()">Agregar Cliente</button>
         <h2>Lista de Clientes</h2>
         <table>
             <tr>
@@ -98,32 +101,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </tr>
             <?php endforeach; ?>
         </table>
-        <h2>Agregar/Editar Cliente</h2>
-        <form method="POST" id="clientForm">
-            <input type="hidden" name="action" id="clientAction" value="create">
-            <input type="hidden" name="id_usuario" id="clientIdUsuario">
-            <div class="form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
+
+        <!-- Modal -->
+        <div id="clientModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2 id="modalTitle">Agregar/Editar Cliente</h2>
+                <form method="POST" id="clientForm">
+                    <input type="hidden" name="action" id="clientAction" value="create">
+                    <input type="hidden" name="id_usuario" id="clientIdUsuario">
+                    <div class="form-group">
+                        <label for="username">Usuario:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="text" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <button type="submit">Guardar</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="text" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="apellido">Apellido:</label>
-                <input type="text" id="apellido" name="apellido" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <button type="submit">Guardar</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>
