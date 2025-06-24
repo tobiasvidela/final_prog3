@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Gestionar Productos</title>
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/manage_products.css">
     <script src="scripts/management.js" defer></script>
 </head>
 <body class="admin-page">
@@ -71,6 +72,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Botón para abrir el modal de creación -->
         <button onclick="openProductModalForCreate()">Agregar Producto</button>
         <h2>Lista de Productos</h2>
+        <div class="filter-bar">
+            <input type="text" id="searchProducts" placeholder="Buscar por nombre..." class="search-bar">
+    
+            <select id="filterProveedor" class="filter-select">
+                <option value="">Todos los proveedores</option>
+                <?php
+                // Obtener proveedores únicos del array $products
+                $proveedoresUnicos = array_unique(array_column($products, 'proveedor'));
+                sort($proveedoresUnicos);
+                foreach ($proveedoresUnicos as $prov) {
+                    echo '<option value="' . htmlspecialchars($prov) . '">' . htmlspecialchars($prov) . '</option>';
+                }
+                ?>
+            </select>
+        </div>
         <table>
             <tr>
                 <th>ID</th>

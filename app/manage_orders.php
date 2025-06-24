@@ -61,6 +61,7 @@ $status_map = [
     <title>Gestionar Pedidos</title>
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/manage_orders.css">
     <script src="scripts/management.js" defer></script>
     <script src="scripts/admin.js" defer></script>
 </head>
@@ -74,6 +75,26 @@ $status_map = [
         <?php if (isset($success)): ?>
             <p class="success"><?php echo htmlspecialchars($success); ?></p>
         <?php endif; ?>
+        <h2>Filtrar Pedidos</h2>
+        <div class="filters">
+            <input type="text" id="searchInput" placeholder="Buscar por usuario o descripción..." class="search-bar">
+
+            <select id="estadoFilter">
+                <option value="">Todos los estados</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="armado">Armado</option>
+                <option value="enviado">Enviado</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+
+            <label>Desde:
+                <input type="date" id="fechaDesde">
+            </label>
+
+            <label>Hasta:
+                <input type="date" id="fechaHasta">
+            </label>
+        </div>
         <table>
             <tr>
                 <th>ID Pedido</th>
@@ -95,7 +116,13 @@ $status_map = [
                     </td>
                     <td><?php echo htmlspecialchars($order['descripcion']); ?></td>
                     <td><?php echo htmlspecialchars(number_format($order['precio_total'], 2)); ?></td>
-                    <td><?php echo htmlspecialchars($order['fecha']); ?></td>
+                    <td>
+                        <?php
+                            $fechaOriginal = $order['fecha'];
+                            $fechaFormateada = (new DateTime($fechaOriginal))->format('d/m/Y H:i:s');
+                            echo htmlspecialchars($fechaFormateada);
+                        ?>
+                    </td>
                     <td>
                         <button onclick='openOrderModal(<?php echo json_encode([
                             "id_pedido" => $order["id_pedido"],

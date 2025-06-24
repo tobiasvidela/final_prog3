@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Gestionar Clientes</title>
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="styles/manage_clients.css">
     <script src="scripts/management.js" defer></script>
     <script src="scripts/admin.js" defer></script>
 </head>
@@ -74,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Botón para abrir el modal en modo "crear" -->
         <button onclick="openModalForCreate()">Agregar Cliente</button>
         <h2>Lista de Clientes</h2>
+        <input type="text" id="searchClients" placeholder="Buscar cliente por nombre, apellido, usuario o email..." class="search-bar">
         <table>
             <tr>
                 <th>ID</th>
