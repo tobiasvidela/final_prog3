@@ -1,5 +1,13 @@
 /* manage_orders.css */
 
+.navbar {
+    justify-content: space-around;
+}
+
+.navbar li {
+    padding: 0.2em 1em;
+}
+
 .filters {
     display: flex;
     flex-wrap: wrap; /* Permite que los elementos salten de línea */
@@ -25,6 +33,7 @@
 
 /* Estilo base para todos los inputs, selects y date pickers dentro de .filters */
 .search-bar,
+.modal select,
 .filters select,
 .filters input[type="date"] {
     padding: 10px 12px;

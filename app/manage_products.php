@@ -65,13 +65,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="admin-page">
     <div class="container">
         <h1>Gestionar Productos</h1>
-        <a href="admin.php">Volver al Panel</a>
+        <nav>
+            <ul class="navbar">
+                <li><a href="admin.php">Volver al Panel</a></li>
+                <!-- Botón para abrir el modal de creación -->
+                <li><a onclick="openProductModalForCreate()" >Agregar Producto</a></li>
+            </ul>
+        </nav>
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
-        <!-- Botón para abrir el modal de creación -->
-        <button onclick="openProductModalForCreate()">Agregar Producto</button>
-        <h2>Lista de Productos</h2>
         <div class="filter-bar">
             <input type="text" id="searchProducts" placeholder="Buscar por nombre..." class="search-bar">
     

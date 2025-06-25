@@ -1,15 +1,27 @@
 /* manage_clients.css */
+.controls-bar {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos salten de línea */
+    gap: 1rem; /* Espacio entre los elementos de filtro */
+    margin: 1.5rem 0 2rem 0; /* Margen superior e inferior para separar de otros elementos */
+    align-items: flex-end; /* Alinea los elementos a la parte inferior de su contenedor flex */
+    justify-content: flex-start; /* Alinea los elementos al inicio (izquierda) de la línea */
+    padding: 0.1rem; /* Relleno interno para el contenedor de filtros */
+    background-color: var(--surface-light); /* Fondo más claro para el área de filtros */
+    border-radius: var(--radius); /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sutil sombra */
+}
 
 /* Barra de búsqueda */
 .search-bar {
-    margin: 1rem 0; /* Ajusta el margen superior e inferior */
+    margin: 1rem ; /* Ajusta el margen superior e inferior */
     padding: 8px 12px;
     width: 100%;
     max-width: calc(100% - 24px); /* Limita el ancho máximo */
     font-size: 1rem;
     border: 1px solid var(--border); /* Usa variable global */
     border-radius: var(--radius); /* Usa variable global */
-    background-color: var(--surface-light); /* Fondo más claro */
+    background-color: var(--surface); /* Fondo más claro */
     color: var(--text-primary); /* Color de texto */
 }
 

@@ -68,7 +68,11 @@ $status_map = [
 <body class="admin-page">
     <div class="container">
         <h1>Gestionar Pedidos</h1>
-        <a href="admin.php">Volver al Panel de Admin</a>
+        <nav>
+            <ul class="navbar">
+                <li><a href="admin.php">Volver al Panel</a></li>
+            </ul>
+        </nav>
         <?php if (isset($error)): ?>
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
