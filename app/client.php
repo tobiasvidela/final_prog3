@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_order'])) {
     <div class="container">
         <h1>Hola, <?php echo htmlspecialchars($nombre_cliente); ?>!</h1>
         <nav>
-            <ul>
+            <ul class="navbar">
                 <li><a href="orders.php">Ver Mis Pedidos</a></li>
                 <li><a href="logout.php">Cerrar Sesión</a></li>
             </ul>

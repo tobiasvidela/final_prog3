@@ -1,15 +1,62 @@
 .filter-bar {
     display: flex;
-    gap: 1rem;
-    margin: 1rem 0;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Permite que los elementos salten de línea */
+    gap: 1rem; /* Espacio entre los elementos de filtro */
+    margin: 1.5rem 0 2rem 0; /* Margen superior e inferior para separar de otros elementos */
+    align-items: flex-end; /* Alinea los elementos a la parte inferior de su contenedor flex */
+    justify-content: flex-start; /* Alinea los elementos al inicio (izquierda) de la línea */
+    padding: 1rem; /* Relleno interno para el contenedor de filtros */
+    background-color: var(--surface-light); /* Fondo más claro para el área de filtros */
+    border-radius: var(--radius); /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sutil sombra */
 }
 
+/* Estilo base para todos los inputs y selects dentro de .filter-bar */
 .search-bar,
 .filter-select {
-    padding: 8px;
+    padding: 10px 12px;
     font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border); /* Usa la variable global para el borde */
+    border-radius: var(--radius); /* Usa la variable global para el radio */
+    background-color: var(--surface); /* Fondo más oscuro para los campos */
+    color: var(--text-primary); /* Color de texto */
+    appearance: none; /* Elimina estilos por defecto del navegador para selects/inputs */
+    -webkit-appearance: none; /* Para navegadores basados en Webkit */
+    -moz-appearance: none; /* Para Firefox */
+    box-sizing: border-box; /* Incluye padding y border en el ancho */
+    height: 40px; /* Altura consistente para todos los campos de filtro */
 }
 
+/* Barra de búsqueda: ocupa el espacio restante en su fila con el mínimo deseado */
+.search-bar {
+    flex-grow: 1; /* Permite que la barra de búsqueda ocupe el espacio disponible */
+    flex-basis: 0; /* Permite que flex-grow funcione eficientemente */
+    min-width: 580px; /* Ancho mínimo de 580px como se solicitó */
+}
+
+/* Selector de proveedor: mantiene su tamaño actual y es fijo */
+.filter-select {
+    flex-shrink: 0; /* Evita que el selector se encoja */
+    flex-grow: 0; /* Evita que el selector crezca */
+    min-width: 180px; /* Ancho mínimo fijo para el selector */
+    max-width: 250px; /* Ancho máximo opcional para el selector */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23cccccc%22%20d%3D%22M208.5%2099.5L128%20171l-80.5-71.5A8%208%200%200%0035%20102.5l90.5%2080.5a8%208%200%200011.3%200L221%20102.5a8%208%200%2000-12.5-3z%22%2F%3E%3C%2Fsvg%3E'); /* Ícono SVG de flecha hacia abajo */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 30px; /* Para dejar espacio al icono */
+}
+
+/* Estilo para los focus (cuando un campo está seleccionado) */
+.search-bar:focus,
+.filter-select:focus {
+    outline: none;
+    border-color: var(--primary); /* Borde primario */
+    box-shadow: 0 0 0 2px rgba(159, 92, 255, 0.4); /* Sombra de enfoque con color primario */
+}
+
+/* Ajuste para el color de texto de los placeholders */
+.search-bar::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}

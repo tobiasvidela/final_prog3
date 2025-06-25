@@ -1,19 +1,27 @@
 :root {
     --background: #121212;
-    --purple-bg: #1b0f2e;
+    --purple-bg: #1b0f2e; /* Admin background */
     --surface: #1e1e1e;
     --surface-light: #2a2a2a;
     --surface-dark: #131313;
     --text-primary: #ffffff;
     --text-secondary: #cccccc;
-    --primary: #9f5cff;
-    --primary-dark: #7d3fe0;
+    --primary: #9f5cff; /* Original primary purple */
+    --primary-dark: #7d3fe0; /* Original primary dark purple */
     --error: #ff4c4c;
     --success: #4caf50;
     --border: #3c3c3c;
     --radius: 10px;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     --font: 'Segoe UI', 'Roboto', sans-serif;
+
+    /* client-specific variables */
+    --client-bg: #1A2E35; /* Dark teal background for client page */
+    --client-surface: #263E48; /* Slightly lighter teal for container/cards */
+    --client-surface-light: #324F5D; /* Even lighter for elements like navbar/card headers */
+    --client-primary: #4ECDC4; /* A vibrant teal/cyan for actions/highlights */
+    --client-primary-dark: #3BB1A7; /* Darker version for hover states */
+    --client-text-secondary: #ADD8E6; /* Lighter text for contrast on darker elements */
 }
 
 body {
@@ -163,8 +171,4 @@ a {
     color: var(--primary);
     text-decoration: none;
     font-weight: 500;
-}
-
-a:hover {
-    text-decoration: underline;
 }

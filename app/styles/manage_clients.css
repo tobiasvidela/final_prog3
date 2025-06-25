@@ -1,10 +1,94 @@
+/* manage_clients.css */
+
+/* Barra de búsqueda */
 .search-bar {
-    margin: 1rem 0;
+    margin: 1rem 0; /* Ajusta el margen superior e inferior */
     padding: 8px 12px;
     width: 100%;
-    max-width: 400px;
+    max-width: calc(100% - 24px); /* Limita el ancho máximo */
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid var(--border); /* Usa variable global */
+    border-radius: var(--radius); /* Usa variable global */
+    background-color: var(--surface-light); /* Fondo más claro */
+    color: var(--text-primary); /* Color de texto */
 }
 
+.navbar {
+    justify-content: space-around;
+}
+
+.navbar li {
+    padding: 0.2em 1em;
+}
+
+.navbar > li:last-child a {
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--success);
+}
+
+.navbar > li:last-child a:hover {
+    background-color: #3cb043;
+}
+
+/* Controles superiores (Agregar Cliente y Buscar) */
+.controls-bar {
+    display: flex; /* Permite alinear elementos en una fila */
+    justify-content: space-between; /* Espacio entre el botón y la barra de búsqueda */
+    align-items: center; /* Alinea verticalmente */
+    margin-bottom: 1.5rem; /* Margen inferior para separarlo de la tabla */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 1rem; /* Espacio entre elementos si se envuelven */
+}
+
+/* Estilo para los botones dentro de la tabla */
+.actions {
+    display: flex; /* Usa flexbox para alinear los botones Eliminar y Editar */
+    gap: 0.5rem; /* Espacio entre los botones */
+    flex-wrap: wrap; /* Si hay muchos botones, que se envuelvan */
+    justify-content: flex-start; /* Alinea los botones al inicio de la celda */
+}
+
+.actions button {
+    /* Sobrescribe el width: 100% de global.css para botones */
+    width: auto;
+    margin-top: 0; /* Elimina el margen superior de 10px que puede tener global.css */
+    padding: 6px 12px; /* Ajusta el padding para botones más pequeños en la tabla */
+    font-size: 0.85rem; /* Tamaño de fuente un poco más pequeño */
+}
+
+/* Estilo específico para el botón Editar */
+.edit-btn {
+    background-color: var(--primary); /* El color primario de tu tema */
+    color: var(--text-primary);
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Ajustes para el modal si es necesario, basados en tu global.css y admin.css */
+#clientModal .modal-content {
+    background-color: var(--surface-dark); /* Usar color del admin panel */
+    color: var(--text-primary);
+}
+
+#clientModal .form-group label {
+    color: var(--text-secondary);
+}
+
+#clientModal .modal-content input {
+    background-color: var(--surface-light);
+    border-color: var(--border);
+    color: var(--text-primary);
+}
+
+#clientModal .modal-content button[type="submit"] {
+    background-color: var(--primary);
+    color: white;
+}
+
+#clientModal .modal-content button[type="submit"]:hover {
+    background-color: var(--primary-dark);
+}

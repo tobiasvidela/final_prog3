@@ -1,3 +1,457 @@
-.client-page {
-    background-color: var(--client-bg); 
+/* Estilos específicos para la página de clientes */
+body {
+    background-color: var(--client-bg); /* Fondo distintivo para el cliente */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinea al inicio para que el contenido empiece arriba */
+    min-height: 100vh;
+    padding: 2rem 0; /* Añadir padding vertical para mejor espaciado en pantallas pequeñas */
+}
+
+.container {
+    background-color: var(--client-surface); /* Contenedor principal con nuevo color de superficie */
+    border-radius: var(--radius);
+    padding: 2.5rem; /* Un poco más de padding */
+    box-shadow: 0 0 25px rgba(0,0,0,0.5); /* Sombra más pronunciada */
+    margin: 2rem 1.5rem; /* Margen para pantallas más pequeñas */
+    width: 100%;
+    max-width: 1000px; /* Aumentar el ancho máximo del contenedor para más espacio */
+    text-align: center;
+    box-sizing: border-box; /* Incluir padding y borde en el ancho/alto total */
+}
+
+/* Títulos */
+h1, h2 {
+    color: var(--text-primary); /* Mantener blanco para contraste */
+    margin-bottom: 1.8rem;
+    font-size: 2.2rem; /* Títulos un poco más grandes */
+    font-weight: 700;
+}
+
+/* Navbar para cliente - MEJORADO */
+nav {
+    margin-bottom: 2.5rem; /* Más espacio debajo de la nav */
+}
+
+.navbar ul { /* Usamos ul porque client.php tiene un ul directamente */
+    display: flex;
+    justify-content: center; /* Centrar los elementos del navbar */
+    gap: 2rem; /* Aumentar el espacio entre los enlaces */
+    padding: 1rem 1.5rem; /* Más padding alrededor de los enlaces */
+    border-radius: var(--radius);
+    background-color: var(--client-surface-light); /* Fondo de navbar distintivo */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Sombra más pronunciada para dar profundidad */
+    flex-wrap: wrap;
+    list-style: none; /* Quitar viñetas de lista */
+    margin: 0;
+}
+
+.navbar li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.7rem 1.4rem; /* Más padding para los enlaces */
+    border-radius: 10px; /* Bordes más redondeados */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Añadir transición para transform */
+    font-weight: 600;
+    font-size: 1.1rem; /* Un poco más grande la fuente de los enlaces */
+    display: block;
+    position: relative; /* Para el efecto de underline animado */
+    overflow: hidden; /* Oculta el pseudo-elemento antes de la animación */
+}
+
+.navbar li a:hover {
+    background-color: var(--client-primary); /* Nuevo color primario al pasar el mouse */
+    color: var(--surface-dark); /* Texto oscuro para el hover en contraste */
+    transform: translateY(-3px); /* Ligera elevación al pasar el mouse */
+}
+
+/* Efecto de underline animado */
+.navbar li a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Grosor del underline */
+    background-color: var(--client-primary); /* Color del underline */
+    transform: translateX(-100%); /* Inicia fuera de la vista */
+    transition: transform 0.3s ease-out;
+}
+
+.navbar li a:hover::before {
+    transform: translateX(0); /* Desliza el underline al hacer hover */
+}
+
+
+/* Mensajes de error/éxito */
+.error, .success {
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.error {
+    background-color: rgba(255, 76, 76, 0.2);
+    color: var(--error);
+}
+
+.success {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: var(--success);
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espaciado entre elementos del formulario */
+}
+
+.form-group {
+    text-align: left;
+}
+
+label {
+    color: var(--client-text-secondary); /* Color de etiqueta que combine con la nueva paleta */
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    display: block; /* Asegura que la etiqueta esté en su propia línea */
+}
+
+input[type="number"],
+textarea {
+    /* width: calc(100% - 24px); */
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background-color: var(--surface-light); /* Fondo del input del global */
+    color: var(--text-primary);
+    font-size: 1rem;
+    box-sizing: border-box; /* Importante para el width 100% */
+}
+
+input[type="number"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--client-primary); /* Resaltado de foco con el nuevo primario */
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.4); /* Sombra de foco con el nuevo primario */
+}
+
+textarea {
+    min-height: 80px; /* Altura mínima para la descripción */
+    resize: vertical; /* Permitir redimensionar solo verticalmente */
+}
+
+button[type="submit"] {
+    background-color: var(--client-primary); /* Botón de submit con el nuevo primario */
+    color: var(--surface-dark); /* Texto oscuro para el botón de submit */
+    padding: 14px 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: auto; /* Dejar que el ancho se ajuste al contenido */
+    align-self: center; /* Centrar el botón */
+    max-width: 300px; /* Limitar el ancho del botón */
+}
+
+button[type="submit"]:hover {
+    background-color: var(--client-primary-dark);
+    transform: translateY(-2px); /* Pequeño efecto de elevación al pasar el mouse */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+
+/* Grid de productos - MEJORADO */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Aumentar el min-width de las tarjetas */
+    gap: 1.8rem; /* Aumentar el espacio entre tarjetas */
+    margin-bottom: 2.5rem; /* Más espacio debajo de la grid */
+}
+
+.product-card {
+    background-color: var(--client-surface-light); /* Fondo de tarjeta de producto */
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25); /* Sombra más pronunciada para las tarjetas */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición para efectos de hover */
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Elevación sutil al pasar el mouse */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35); /* Sombra más grande al pasar el mouse */
+}
+
+.product-card h3 {
+    color: var(--client-primary); /* Título del producto con el color primario del cliente */
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.4rem; /* Título un poco más grande */
+}
+
+.product-card p {
+    color: var(--client-text-secondary); /* Texto secundario para info del producto */
+    margin-bottom: 0.4rem;
+    font-size: 1rem; /* Tamaño de fuente un poco más grande */
+}
+
+.product-card label {
+    font-size: 0.95rem; /* Etiqueta de cantidad un poco más grande */
+    margin-top: 0.8rem;
+    margin-bottom: 0.4rem;
+}
+
+.product-card input[type="number"] {
+    width: 100%;
+    max-width: 120px; /* Ancho fijo para el input de cantidad */
+    padding: 10px; /* Un poco más de padding en el input */
+    text-align: center;
+    -moz-appearance: textfield; /* Para ocultar flechas en Firefox */
+    border-radius: 6px; /* Ligeramente menos redondeado para diferenciarse del botón */
+}
+
+/* Ocultar flechas de input type number en Chrome/Safari/Edge */
+.product-card input[type="number"]::-webkit-outer-spin-button,
+.product-card input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Estilos para el footer o información adicional si existiera */
+/* Mantener los estilos de global.css para elementos genéricos no sobrescritos aquí */
+
+
+
+/* --- Estilos para orders.php (Mis Pedidos) --- */
+
+/* Estilo del contenedor principal para pedidos, se extiende del .container general */
+.orders-container {
+    max-width: 1200px; /* Un poco más ancho para el layout de dos columnas */
+    text-align: left; /* Alineación de texto por defecto a la izquierda dentro del contenedor */
+}
+
+.orders-container h1 {
+    text-align: center; /* Centrar el título principal */
+}
+
+/* Layout de dos columnas para pedidos */
+.orders-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Columna fija para sidebar, el resto para contenido */
+    gap: 2.5rem; /* Espacio entre las dos columnas */
+    margin-top: 2rem;
+}
+
+/* Sidebar para la lista de pedidos */
+.sidebar {
+    background-color: var(--client-surface-light);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    min-height: 400px; /* Altura mínima para la barra lateral */
+    max-height: 70vh; /* Altura máxima para evitar que sea demasiado larga */
+    overflow-y: auto; /* Scroll si hay muchos pedidos */
+    border: 1px solid var(--border); /* Borde sutil */
+}
+
+.sidebar h2 {
+    color: var(--client-primary);
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.order-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.order-list li {
+    margin-bottom: 0.5rem;
+}
+
+.order-list li a {
+    display: block;
+    padding: 0.8rem 1rem;
+    background-color: var(--client-surface); /* Fondo para cada item de pedido */
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    font-weight: 500;
+    white-space: nowrap; /* Evita que el texto se rompa */
+    overflow: hidden; /* Oculta cualquier desbordamiento */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+    border: 1px solid transparent; /* Borde para el hover */
+}
+
+.order-list li a:hover {
+    background-color: var(--client-primary-dark);
+    transform: translateX(5px); /* Efecto de deslizamiento al pasar el mouse */
+    border-color: var(--client-primary); /* Borde al pasar el mouse */
+}
+
+.order-list li a.active {
+    background-color: var(--client-primary); /* Color de fondo para el pedido seleccionado */
+    color: var(--surface-dark); /* Texto oscuro para el activo */
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    border-color: var(--client-primary);
+}
+
+.no-orders-msg, .initial-msg {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+
+/* Contenido principal de detalles del pedido */
+.main-content {
+    background-color: var(--client-surface-light);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+}
+
+.main-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+    display: flex; /* Para alinear el ícono con el título */
+    align-items: center;
+    gap: 0.8rem; /* Espacio entre el título y el ícono */
+}
+
+.main-content p {
+    color: var(--client-text-secondary);
+    margin-bottom: 0.8rem;
+    font-size: 1.05rem;
+}
+
+/* Tabla de detalles del pedido */
+.main-content table {
+    width: 100%;
+    margin-top: 1.5rem;
+    background-color: var(--client-surface); /* Fondo de tabla */
+    border-radius: var(--radius);
+    overflow: hidden; /* Asegura que las esquinas redondeadas se vean */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.main-content th,
+.main-content td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border); /* Borde más sutil */
+}
+
+.main-content th {
+    background-color: var(--client-primary-dark); /* Color de cabecera de tabla */
+    color: var(--surface-dark); /* Texto oscuro para contraste */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.main-content td {
+    color: var(--text-secondary);
+    background-color: var(--client-surface); /* Fondo de celdas */
+}
+
+.main-content tr:nth-child(even) td {
+    background-color: var(--client-surface-dark); /* Fila par ligeramente más oscura */
+}
+
+.main-content tr:last-child td {
+    border-bottom: none; /* Eliminar borde inferior de la última fila */
+}
+
+/* Estilos para el ícono de estado */
+.status-icon {
+    display: inline-block;
+    margin-left: 8px; /* Espacio a la izquierda del ícono */
+    font-size: 1.1em; /* Un poco más grande que el texto normal */
+    vertical-align: middle; /* Alineación vertical */
+    line-height: 1; /* Asegura que no añada altura extra */
+}
+
+/* Colores/Estilos específicos para cada estado */
+/* .status-icon.pendiente { */
+    /* color: orange; /* O el color que desees para pendiente */
+/* } */
+
+/* .status-icon.armado { */
+    /* color: #3498db; /* Azul para armado */ 
+/* } */
+
+/* .status-icon.enviado { */
+    /* color: #2ecc71; /* Verde para enviado */ 
+/* } */
+
+/* .status-icon.cancelado { */
+    /* color: #e74c3c; /* Rojo para cancelado */ 
+/* } */
+
+/* Ajustes para los enlaces en el sidebar */
+.sidebar .order-list a {
+    display: flex; /* Para que el texto y el ícono estén en línea */
+    justify-content: space-between; /* Espacio entre el texto y el ícono */
+    align-items: center; /* Alinear verticalmente */
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 900px) {
+    .orders-layout {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas más pequeñas */
+        gap: 2rem;
+    }
+
+    .sidebar {
+        min-height: auto; /* Altura automática en móvil */
+        max-height: 300px; /* Limitar la altura de la lista de pedidos en móvil */
+    }
+
+    .orders-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+
+    .main-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .main-content th,
+    .main-content td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar ul {
+        flex-direction: column; /* Apilar elementos del navbar en pantallas muy pequeñas */
+        gap: 0.5rem;
+        padding: 0.8rem;
+    }
+
+    .navbar li a {
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+    }
 }

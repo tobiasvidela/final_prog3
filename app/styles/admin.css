@@ -107,6 +107,7 @@ nav {
 }
 
 .navbar a:hover {
+    cursor: pointer;
     background-color: var(--primary-dark);
 }
 
@@ -131,7 +132,7 @@ nav {
 
 /* Contenido del modal */
 .modal-content {
-    background-color: white;
+    background-color: var(--surface-dark);
     padding: 20px;
     border-radius: 8px;
     width: 400px;

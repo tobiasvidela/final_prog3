@@ -75,8 +75,7 @@ $status_map = [
         <?php if (isset($success)): ?>
             <p class="success"><?php echo htmlspecialchars($success); ?></p>
         <?php endif; ?>
-        <h2>Filtrar Pedidos</h2>
-        <div class="filters">
+        <form class="filters" id="orderFiltersForm">
             <input type="text" id="searchInput" placeholder="Buscar por usuario o descripción..." class="search-bar">
 
             <select id="estadoFilter">
@@ -94,7 +93,7 @@ $status_map = [
             <label>Hasta:
                 <input type="date" id="fechaHasta">
             </label>
-        </div>
+        </form>
         <table>
             <tr>
                 <th>ID Pedido</th>

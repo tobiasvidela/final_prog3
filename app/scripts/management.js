@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Products/Productos Searching behavior
 document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("searchProducts");
+    const searchInput_products = document.getElementById("searchProducts");
     const proveedorSelect = document.getElementById("filterProveedor");
     const rows = document.querySelectorAll("table tr:not(:first-child)");
 
     function filtrar() {
-        const searchValue = searchInput.value.toLowerCase();
+        const searchValue = searchInput_products.value.toLowerCase();
         const proveedorValue = proveedorSelect.value.toLowerCase();
 
         rows.forEach(row => {
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    searchInput.addEventListener("input", filtrar);
+    searchInput_products.addEventListener("input", filtrar);
     proveedorSelect.addEventListener("change", filtrar);
 });
 
