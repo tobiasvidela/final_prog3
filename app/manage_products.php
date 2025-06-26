@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles/admin.css">
     <link rel="stylesheet" href="styles/manage_products.css">
     <script src="scripts/management.js" defer></script>
+    <script src="scripts/admin.js" defer></script>
 </head>
 <body class="admin-page">
     <div class="container">
