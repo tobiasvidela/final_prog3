@@ -5,7 +5,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./app:/var/www/html
+      - ./app:/var/www/html:z
     networks:
       - prog3
     depends_on:
